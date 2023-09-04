@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cuj.calendar.reserv.dao.IReservDAO">
+	
+	<select id="getReservList" resultType="com.cuj.calendar.reserv.vo.ReservVO">
+		SELECT 
+		      a.board_no
+		    , a.board_title
+		    , a.board_content
+		    , a.mem_id
+		    , b.mem_name
+		    , TO_CHAR(a.board_date, 'MM/dd HH:mm') AS board_date
+		FROM boards a, members b
+		WHERE a.mem_id = b.mem_id
+		  AND a.del_yn = 'N'
+		ORDER BY a.board_no DESC	
+	</select>
+	
+	<insert id="insertReserv" parameterType="com.cuj.calendar.reserv.vo.ReservVO">
+		INSERT INTO boards (
+		      board_no
+		    , board_title
+		    , board_content
+		    , mem_id
+		    , board_date
+		    , del_yn
+		) VALUES (
+		      (SELECT COUNT(*)+1 FROM boards)
+		    , #{boardTitle }
+		    , #{boardContent }
+		    , #{memId }
+		    , SYSDATE
+		    , 'N'
+		)
+	</insert>
+	
+	<select id="getEnableTimeList" parameterType="String" resultType="String">
+		SELECT 
+		      a.board_no
+		    , a.board_title
+		    , a.board_content
+		    , a.mem_id
+		    , b.mem_name
+		    , TO_CHAR(a.board_date, 'yyyy.MM.dd HH:mm:ss') AS board_date
+		FROM boards a, members b
+		WHERE a.mem_id = b.mem_id
+		  AND a.board_no = #{boardNo}	
+	</select>
+	
+	
+	
+</mapper>
