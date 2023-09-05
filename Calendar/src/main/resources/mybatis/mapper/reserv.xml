@@ -17,34 +17,35 @@
 	</select>
 	
 	<insert id="insertReserv" parameterType="com.cuj.calendar.reserv.vo.ReservVO">
-		INSERT INTO boards (
-		      board_no
-		    , board_title
-		    , board_content
-		    , mem_id
-		    , board_date
-		    , del_yn
+		INSERT INTO reserv (
+		      reserv_date 
+		    , reserv_time 
+		    , reserv_name 
+		    , reserv_phone 
+		    , reserv_pw 
+		    , del_yn 
 		) VALUES (
-		      (SELECT COUNT(*)+1 FROM boards)
-		    , #{boardTitle }
-		    , #{boardContent }
-		    , #{memId }
-		    , SYSDATE
+		      #{reservDate}
+		    , #{reservTime}
+		    , #{reservName}
+		    , #{reservPhone}
+		    , #{reservPw}
 		    , 'N'
 		)
 	</insert>
 	
 	<select id="getEnableTimeList" parameterType="String" resultType="String">
 		SELECT 
-		      a.board_no
-		    , a.board_title
-		    , a.board_content
-		    , a.mem_id
-		    , b.mem_name
-		    , TO_CHAR(a.board_date, 'yyyy.MM.dd HH:mm:ss') AS board_date
-		FROM boards a, members b
-		WHERE a.mem_id = b.mem_id
-		  AND a.board_no = #{boardNo}	
+		    time_list
+		FROM 
+		    reserv_time
+		WHERE 
+		    time_list NOT IN (
+		        SELECT reserv_time
+		        FROM reserv
+		        WHERE reserv_date = #{reservDate}
+		    )
+		ORDER BY 1	
 	</select>
 	
 	

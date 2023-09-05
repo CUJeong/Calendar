@@ -1,66 +1,77 @@
 package com.cuj.calendar.reserv.vo;
 
 public class ReservVO {
-	private String reserv_date;    	/* 예약날짜(yyyy-MM-dd) */
-	private String reserv_time;		/* 예약시간(HH:mm) */
-	private String reserv_name;		/* 예약자 성함 */
-	private String reserv_phone;	/* 예약자 연락처(01012345678) */
-	private String reserv_pw;		/* 예약자 암호 */
-	private String del_yn;			/* 유효 여부 (Y or N) */
+	private String reservDate;    	/* 예약날짜(yyyy-MM-dd) */
+	private String reservTime;		/* 예약시간(HH:mm) */
+	private String reservName;		/* 예약자 성함 */
+	private String reservPhone;	/* 예약자 연락처(01012345678) */
+	private String reservPw;		/* 예약자 암호 */
+	private String delYn;			/* 유효 여부 (Y or N) */
 	
 	public ReservVO() {
 	}
-	public ReservVO(String reserv_date, String reserv_time, String reserv_name, String reserv_phone, String reserv_pw,
-			String del_yn) {
-		this.reserv_date = reserv_date;
-		this.reserv_time = reserv_time;
-		this.reserv_name = reserv_name;
-		this.reserv_phone = reserv_phone;
-		this.reserv_pw = reserv_pw;
-		this.del_yn = del_yn;
+
+	public ReservVO(String reservDate, String reservTime, String reservName, String reservPhone, String reservPw,
+			String delYn) {
+		this.reservDate = reservDate;
+		this.reservTime = reservTime;
+		this.reservName = reservName;
+		this.reservPhone = reservPhone;
+		this.reservPw = reservPw;
+		this.delYn = delYn;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ReservVO [reserv_date=" + reserv_date + ", reserv_time=" + reserv_time + ", reserv_name=" + reserv_name
-				+ ", reserv_phone=" + reserv_phone + ", reserv_pw=" + reserv_pw + ", del_yn=" + del_yn + "]";
+		return "ReservVO [reservDate=" + reservDate + ", reservTime=" + reservTime + ", reservName=" + reservName
+				+ ", reservPhone=" + reservPhone + ", reservPw=" + reservPw + ", delYn=" + delYn + "]";
 	}
-	
-	public String getReserv_date() {
-		return reserv_date;
+
+	public String getReservDate() {
+		return reservDate;
 	}
-	public void setReserv_date(String reserv_date) {
-		this.reserv_date = reserv_date;
+
+	public void setReservDate(String reservDate) {
+		this.reservDate = reservDate;
 	}
-	public String getReserv_time() {
-		return reserv_time;
+
+	public String getReservTime() {
+		return reservTime;
 	}
-	public void setReserv_time(String reserv_time) {
-		this.reserv_time = reserv_time;
+
+	public void setReservTime(String reservTime) {
+		this.reservTime = reservTime;
 	}
-	public String getReserv_name() {
-		return reserv_name;
+
+	public String getReservName() {
+		return reservName;
 	}
-	public void setReserv_name(String reserv_name) {
-		this.reserv_name = reserv_name;
+
+	public void setReservName(String reservName) {
+		this.reservName = reservName;
 	}
-	public String getReserv_phone() {
-		return reserv_phone;
+
+	public String getReservPhone() {
+		return reservPhone;
 	}
-	public void setReserv_phone(String reserv_phone) {
-		this.reserv_phone = reserv_phone;
+
+	public void setReservPhone(String reservPhone) {
+		this.reservPhone = reservPhone;
 	}
-	public String getReserv_pw() {
-		return reserv_pw;
+
+	public String getReservPw() {
+		return reservPw;
 	}
-	public void setReserv_pw(String reserv_pw) {
-		this.reserv_pw = reserv_pw;
+
+	public void setReservPw(String reservPw) {
+		this.reservPw = reservPw;
 	}
-	public String getDel_yn() {
-		return del_yn;
+
+	public String getDelYn() {
+		return delYn;
 	}
-	public void setDel_yn(String del_yn) {
-		this.del_yn = del_yn;
+
+	public void setDelYn(String delYn) {
+		this.delYn = delYn;
 	}
-	
 }

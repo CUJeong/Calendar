@@ -15,24 +15,28 @@
 			@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
 	
 			#reservation{
-				display: flex;
-				justify-content: center;
+				width: 1100px;
+				margin: auto;
 				user-select: none;
 			}
-	
+			
+			#reservation > div{
+				display: flex;
+				justify-content: center;
+			}
+			
 			/* calendar-container 의 크기에 따라 내부 달력의 크기가 변한다. (정사각형 권장) */
 			.calendar-container{
 				width: 600px;
-				height: 600px;
 				margin-bottom: 30px;
+				border: 1px solid black;
+				transition-duration: 0.2s;  /* 이게 걸려있으면 JS로 UI 변경 시 애니메이션처럼 변한다. */
 			}
 			
 	        .calendar {
 				width: 100%;
 				height: 100%;
 	            background-color : white;
-	            border: 1px solid black;
-	            transition-duration: 0.2s;  /* 이게 걸려있으면 JS로 UI 변경 시 애니메이션처럼 변한다. */
 	        }
 	        
 	        /* 최 상단 버튼과 년월 표기 */
@@ -88,6 +92,7 @@
 				height: 75%;
 				display: flex;
 				align-items: center;
+				justify-content: start;
 				flex-wrap: wrap;
 			}
 			
@@ -171,7 +176,7 @@
 	        }
 	        
 	        .reserv-container > .time-table > .time-list > div{
-	        	width: calc(100%/4 - 7px);
+	        	width: calc(100%/4 - 8px);
 	        	height: calc(100%/5 - 3px);
 	        	
 	        	display:flex;
@@ -278,6 +283,7 @@
 			    margin: 0;
 			    text-align: center;
 			    transform: translate(0, -40%);
+			    transition-duration: 0.2s;
 			}
 			
 			.reserv-container button{
@@ -296,85 +302,104 @@
 				cursor: pointer;
 			}
 			
-			
+			@media (max-width: 1000px){
+      			#reservation{
+					width: 100%;
+				}
+	        
+				#reservation > div{
+					display: block;
+					width: 100%;
+				}
+				
+				.calendar-container{
+					width: 100%;
+				}
+				
+				.reserv-container{
+		        	width: 100%;
+		        }
+	        }
+	        
+	        @media (max-width: 500px){
+				.reserv-container p{
+				    font-size: 11px;
+				}
+	        }
 	        
         </style>
     </head>
     <body>
-    	<section id="reservation">    	
-	    	<div class="calendar-container">
-		        <div class="calendar">
-		        	<div class="calendar-header">
-		        		<div onClick="prevCalendar();">&#60;</div>
-		        		<div>
-		        			<span id="calYear"></span>년
-		        			&nbsp;
-			                <span id="calMonth"></span>월
-		        		</div>
-		        		<div onClick="nextCalendar();">&#62;</div>
-		        	</div>
-		        	<div class="calendar-week">
-		        		<div>일</div>
-		        		<div>월</div>
-		        		<div>화</div>
-		        		<div>수</div>
-		        		<div>목</div>
-		        		<div>금</div>
-		        		<div>토</div>
-		        	</div>
-		        	<div class="calendar-date">
-		        	
-		        	</div>
+    	<section id="reservation">
+    		<div>
+		    	<div class="calendar-container">
+			        <div class="calendar">
+			        	<div class="calendar-header">
+			        		<div onClick="prevCalendar();">&#60;</div>
+			        		<div>
+			        			<span id="calYear"></span>년
+			        			&nbsp;
+				                <span id="calMonth"></span>월
+			        		</div>
+			        		<div onClick="nextCalendar();">&#62;</div>
+			        	</div>
+			        	<div class="calendar-week">
+			        		<div>일</div>
+			        		<div>월</div>
+			        		<div>화</div>
+			        		<div>수</div>
+			        		<div>목</div>
+			        		<div>금</div>
+			        		<div>토</div>
+			        	</div>
+			        	<div class="calendar-date">
+			        	
+			        	</div>
+				    </div>
 			    </div>
-		    </div>
-		    
-		    <div class="reserv-container">
-		    	<div class="time-table">
-		    		<div class="time-header">
-		    			<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 11h6v1h-7v-9h1v8z"/></svg>
-		    			<span>상담 예약 시간 선택</span>
-		    		</div>
-		    		<div class="time-list">
-			    		<div class="time-enable">09:00</div>
-			    		<div class="time-enable">09:30</div>
-			    		<div class="time-enable">10:00</div>
-			    		<div class="time-enable">10:30</div>
-			    		<div class="time-enable">11:00</div>
-			    		<div class="time-enable">11:30</div>
-			    		<div class="time-enable">12:00</div>
-			    		<div class="time-disable">14:00</div>
-			    		<div class="time-enable">14:30</div>
-			    		<div class="time-enable">15:00</div>
-			    		<div class="time-disable">15:30</div>
-			    		<div class="time-enable">16:00</div>
-			    		<div class="time-enable">16:30</div>
-			    		<div class="time-enable">17:00</div>
-			    		<div class="time-enable">17:30</div>
-		    		</div>
-		    	</div>
-		    	<div class="reserv-input">
-		    		<form action="">
-		    			
-		    			<input id="inputTime" type="hidden">
-		    			
-						<div class="dust-class">
-						  <label for="itemname"><span>* </span>이름</label>
-						  <input type="text" class="txt-input" id="itemname" placeholder="이름을 입력해주세요." value="">
-						</div>
-						<div class="dust-class">
-						  <label for="itempw"><span>* </span>연락처</label>
-						  <input type="text" class="txt-input" id="itempw" placeholder="ex) 01012345678" value="">
-						</div>
-						<div class="dust-class">
-						  <label for="itemnew"><span>* </span>비밀번호</label>
-						  <input type="text" class="txt-input" id="itemnew" placeholder="" value="">
-						</div>
-					    <p>비밀번호는 상담 예약 확인 및 수정/삭제를 위해 사용됩니다.</p>
-					    
-					    <button>상담 예약</button>
-		    		</form>
-		    	</div>
-		    </div>
+			    
+			    <div class="reserv-container">
+			    	<div class="time-table">
+			    		<div class="time-header">
+			    			<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 11h6v1h-7v-9h1v8z"/></svg>
+			    			<span>상담 예약 시간 선택</span>
+			    		</div>
+			    		<div class="time-list">
+			    			<c:forEach items="${enableTimeList }" var="enableTime">
+			    				<c:if test="${enableTime.isEnable() eq true }">
+				    				<div class="time-enable">${enableTime.time }</div>
+			    				</c:if>
+			    				<c:if test="${enableTime.isEnable() eq false}">
+				    				<div class="time-disable">${enableTime.time }</div>
+			    				</c:if>
+			    			</c:forEach>
+			    		</div>
+			    	</div>
+			    	<div class="reserv-input">
+			    		<form action="<c:url value="/insertReservDo" />" method="POST">
+			    			
+			    			<input name="reservDate" id="inputDate" type="hidden">
+			    			<input name="reservTime" id="inputTime" type="hidden">
+			    			
+							<div class="dust-class">
+							  <label for="itemname"><span>* </span>이름</label>
+							  <input name="reservName" type="text" class="txt-input" id="itemname" placeholder="이름을 입력해주세요." value="">
+							</div>
+							<div class="dust-class">
+							  <label for="itempw"><span>* </span>연락처</label>
+							  <input name="reservPhone" type="text" class="txt-input" id="itempw" placeholder="ex) 01012345678" value="">
+							</div>
+							<div class="dust-class">
+							  <label for="itemnew"><span>* </span>비밀번호</label>
+							  <input name="reservPw" type="password" class="txt-input" id="itemnew" placeholder="" value="">
+							</div>
+						    <p>비밀번호는 상담 예약 확인 및 수정/삭제를 위해 사용됩니다.</p>
+						    
+						    <button>상담 예약</button>
+			    		</form>
+			    	</div>
+			    </div>
+    		</div>    	
     	</section>
         
 	    <script>
@@ -383,11 +408,16 @@
 	        	buildCalendar(); 
 	        }    
 	
+	        const v_inputTime = document.getElementById("inputTime");
+	        const v_inputDate = document.getElementById("inputDate");
 	        let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
 	        let today = new Date();     // 페이지를 로드한 날짜를 저장
 	        today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
+	        
+	        let v_calendarContainerHeight = null;
 	
 	        // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
+	        // 한줄(div display:flex)에 7개씩 넣어서 반응형 대응으로 만들기 
 	        function buildCalendar() {
 	
 	            let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
@@ -421,6 +451,7 @@
 	                newDIV.style.width = (calendarDate.offsetWidth / 7 - 20) + "px";
 	                newDIV.style.height = (calendarDate.offsetWidth / 7 - 20) + "px";
 	                
+	                // 일요일은 빨갛게
 	                if(nowDay.getDay() == 0 && !(nowDay < today)){
 	                	newDIV.classList.add("holiday");
 	                }
@@ -442,13 +473,18 @@
 	                calendarDate.appendChild(newDIV);
 	            }
 	         	
+	         	
 	         	// 7줄 까지 넘어가면 달력의 컨테이너 크기 조정
-         		let calContainer = document.querySelector(".calendar");
+         		let calContainer = document.querySelector(".calendar-container");
+	         	
+	         	if(v_calendarContainerHeight == null){
+		            v_calendarContainerHeight = calContainer.offsetHeight;
+	         	}
 	         	if(v_count > 35){
-	         		calContainer.style.height = calContainer.offsetHeight + (calendarDate.offsetWidth / 7) + "px";
+	         		calContainer.style.height = v_calendarContainerHeight + (calendarDate.offsetWidth / 7) + 16 + "px";
 	         	}else{
 	         		let v_container = calContainer.parentElement;
-	         		calContainer.style.height = v_container.offsetHeight + "px";
+	         		calContainer.style.height = v_calendarContainerHeight + "px";
 	         	}
 	        }
 	
@@ -460,6 +496,44 @@
 	            newDIV.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
 	            
 	            // 서버에 AJAX 요청 보낸 후 응답 받아온 걸로 화면에 예약 가능 시간 그려줘야함
+	            let v_ajax = new XMLHttpRequest();
+	            
+	            let v_url = '${pageContext.request.contextPath }/enableTimeList';
+	            
+	            console.log(v_url);
+	            console.log(newDIV.innerHTML);
+	            
+	            let v_choiceDate = document.getElementById("calYear").innerText + "-" + document.getElementById("calMonth").innerText + "-" + newDIV.innerHTML;
+	            
+	            let v_param = "?" + "choiceDate=" + v_choiceDate;
+		        
+	            v_inputDate.value = v_choiceDate;
+	            
+	            console.log(v_param);
+	            
+	            console.log(v_url + v_param);
+	            
+	            v_ajax.open('GET', v_url + v_param);
+	            
+	            v_ajax.onload = function(){
+	            	console.log(v_ajax.response);
+	            	
+	            	let v_enableTimeList = JSON.parse(v_ajax.response);
+	            	let v_timeList = document.querySelector(".time-list");
+	            	v_timeList.innerHTML = "";
+	            	
+	            	for(let i = 0; i < v_enableTimeList.length; i++){
+	            		let v_str = '<div class="time-enable">' + v_enableTimeList[i].time + '</div>';
+	            		if(!v_enableTimeList[i].isEnable){
+		            		v_str = '<div class="time-disable">' + v_enableTimeList[i].time + '</div>';
+	            		}
+	            		v_timeList.innerHTML += v_str;
+	            	}
+	            	
+	            	v_addClickEvent();
+	            }
+	            
+	            v_ajax.send();
 	            
 	        }
 	
@@ -473,7 +547,7 @@
 	        	let todayMonth = new Date();
 	        	// 현재 캘린더의 Month가 오늘 Month + 1보다 같거나 작은경우에만 다음 Month 보기 가능
 	        	// 즉, 캘린더의 Month는 오늘 Month에 대해 다다음달까지만 보여준다.
-	        	if(nowMonth.getMonth() <= todayMonth.getMonth() + 1){        		
+	        	if(nowMonth.getMonth() <= todayMonth.getMonth() + 2){        		
 		            nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, nowMonth.getDate());   // 현재 달을 1 증가
 		            buildCalendar();    // 달력 다시 생성
 	        	}
@@ -487,22 +561,28 @@
 	            return value;
 	        }
 	        
-	        const v_inputTime = document.getElementById("inputTime");
-	        const v_timeList = document.querySelectorAll(".time-list > .time-enable");
-	        for(let i = 0; i < v_timeList.length; i++){
-	        	v_timeList[i].addEventListener("click", ()=>{
-	        		console.log(event.target.innerHTML);
-	        		
-	        		if(document.querySelectorAll(".time-select").length > 0){
-		        		document.querySelector(".time-select").classList.remove("time-select");
-	        		}
-	        		
-	        		event.target.classList.add("time-select");
-	        		
-	        		v_inputTime.value = event.target.innerHTML;
-	        		console.log(v_inputTime.value);
-	        	});
+
+	        
+	        // 예약시간들에 클릭 이벤트 추가
+	        function v_addClickEvent(){
+		        const v_timeList = document.querySelectorAll(".time-list > .time-enable");
+		        for(let i = 0; i < v_timeList.length; i++){
+		        	v_timeList[i].addEventListener("click", function(){
+		        		console.log(event.target.innerHTML);
+		        		
+		        		if(document.querySelectorAll(".time-select").length > 0){
+			        		document.querySelector(".time-select").classList.remove("time-select");
+		        		}
+		        		
+		        		event.target.classList.add("time-select");
+		        		
+		        		v_inputTime.value = event.target.innerHTML;
+		        		console.log(v_inputTime.value);
+		        	});
+		        }
 	        }
+	        
+	        v_addClickEvent();
 	        
 	        
 	    </script>        
