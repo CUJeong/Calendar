@@ -10,7 +10,7 @@ import com.cuj.calendar.reserv.vo.ReservVO;
 public interface IReservDAO {
 	
 	// 예약 목록 불러오기
-	public List<ReservVO> getReservList();
+	public List<ReservVO> getReservList(String choiceDate);
 	
 	// 상담 예약 등록
 	public int insertReserv(ReservVO reserv);
@@ -23,5 +23,8 @@ public interface IReservDAO {
 	
 	// 예약 취소
 	public int cancelReserv(ReservVO reserv);
+	
+	// 날짜 지난 내역들은 del_yn = Y 처리
+	public int delPastReserv();
 	
 }

@@ -14,15 +14,17 @@
         <style type="text/css">
 			@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
 	
-			/* calendar-container 의 크기에 따라 내부 달력의 크기가 변한다. (1000x600px 비율 권장) */
+	      	body {
+		        margin: 0;
+		    }
+		    	
 			.calendar-container{
-				width: 1000px;
-				height: 600px;
+				width: 100%;
 			}
 			
 	        .calendar {
-				width: 100%;
-				height: 100%;
+				width: 70%;
+				margin: auto;
 	            background-color : white;
 	            user-select: none;
 	            border: 1px solid black;
@@ -31,11 +33,12 @@
 	        
 	        /* 최 상단 버튼과 년월 표기 */
 	        .calendar-header{
-	        	height: 15%;
 	        	display: flex;
 	        	justify-content: space-between;
 	        	align-items: center;
 	        	text-align: center;
+	        	padding-top: 20px;
+	        	padding-bottom: 20px;
 	        	
 	        	font-family: 'Questrial', sans-serif;
 	            font-size: 1.3em;
@@ -43,7 +46,6 @@
 	        }
 	        
 	        .calendar-header > div{
-	        	height: 100%;
 	        	display: flex;
 	        	justify-content: center;
 	        	align-items: center;
@@ -61,16 +63,16 @@
 	        
 	        /* 일 ~ 토 요일 표기 부분 */
 	        .calendar-week{
-	        	height: calc(8% - 2px);
 	        	display: flex;
 	        	align-items: center;
-	        	border-top: 1px solid #ccc;
-	        	border-bottom: 1px solid #ccc;
+	        	border-top: 1px solid rgb(245, 208, 66);
+	        	border-bottom: 1px solid rgb(245, 208, 66);
 	        }
 	        
 	        .calendar-week > div{
-	        	height: 100%;
-	        	background-color: #eee;
+	        	padding-top: 10px;
+	        	padding-bottom: 10px;
+	        	background-color: rgba(245, 208, 66, 0.2);
 	        	font-family: 'Questrial', sans-serif;
 	            font-weight: 600;
 	            font-size: 1.1em;
@@ -78,29 +80,54 @@
 	            justify-content: center;
 	        	align-items: center;
 	        	width: calc(100%/7 - 0.9px);
-	        	border-right: 1px solid #ccc;
+	        	border-right: 1px solid rgb(245, 208, 66);
 	        }
 	        
-
+	        .calendar-info{
+	        	padding-top: 10px;
+				padding-bottom: 10px;
+	        }
+	        
+	        .calendar-info > div{
+	        	display: flex;
+	        	justify-content: end;
+	        	align-items: center;
+	        }
+	        
+	        .calendar-info .common-btn{
+	        	background-color: #F5D042;
+				
+				margin-right: 20px;
+				color: white;
+				font-size: 1.1em;
+				font-weight: bold;
+				
+				border-radius: 15px;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				padding-left: 13px;
+				padding-right: 13px;
+				
+				text-align: center;
+				cursor: pointer;
+	        }
 	        
 	
 			/* 날짜 표기 부분 */
 			.calendar-date {
-				height: 77%;
-				display: flex;
-				align-items: center;
-				flex-wrap: wrap;
 			}
 			
 	        .calendar-date > div {
-	            transition-duration: 0.5s;
-				width: calc(100%/7 - 0.9px);
-				height: calc(100%/5 - 1px);
+	            display: flex;
+	            justify-content: space-between;
+	        }
+	        
+	        .calendar-date > div > .each-date{
 				border-right: 1px solid #eee;
 				border-bottom: 1px solid #ccc;
 	        }    
 	        
-	        .calendar-date > div > .date-header{
+	        .calendar-date > div > .each-date > .date-header{
 	            font-family: 'Montserrat', sans-serif;
 	            font-size: 1.1em;
 	            
@@ -112,19 +139,21 @@
 	        	padding-top: 10px;
 	        }
 	        
-	        .calendar-date > div > .date-reserv{
+	        .calendar-date > div > .each-date > .date-reserv{
 	            height: 80%;
 	            
 	            display: flex;
 	            justify-content: center;
 	        	align-items: center;
+	        	
+	        	font-size: 1em;
 	        }    
 	        
 	        .date-reserv > .btn-reserv{
 	        	background-color: rgb(13, 110, 253);
 	        	border-radius: 12px;
-	        	padding-top: 7px;
-	        	padding-bottom: 7px;
+	        	padding-top: 5px;
+	        	padding-bottom: 5px;
 	        	padding-left: 10px;
 	        	padding-right: 10px;
 	        	position: relative;
@@ -140,8 +169,8 @@
 	        	color: white;
 	        	border-radius: 13px;
 	        	width: 25px;
-	        	height: 21px;
-	        	padding-bottom: 4px;
+	        	height: 23px;
+	        	padding-bottom: 2px;
 	        	display: flex;
 	            justify-content: center;
 	        	align-items: center;
@@ -151,6 +180,7 @@
 	        
 	
 	        .pastDay {
+	        	background-color: #f5f5f5;
 	            color: lightgray;
 	        }
 	
@@ -199,6 +229,14 @@
 	        
 	        .common-modal > div:nth-child(1){
 	        	height: 70%;
+	        	display: flex;
+	        	flex-direction: column;
+	        	justify-content: center;
+	        	align-items: center;
+	        	font-size: 1.2em;
+	        	font-weight: 600;
+	        	padding-left: 40px;
+	        	padding-right: 40px;
 	        }
 	        
 	        .common-modal > div:nth-child(2){
@@ -206,6 +244,11 @@
 	        	display: flex;
 	        	justify-content: center;
 	        	align-items: center;
+	        }
+	        
+	        .common-modal > div:nth-child(1) > p{
+	        	margin-top: 20px;
+	        	margin-bottom: 5px;
 	        }
 	        
 	        .common-modal .common-btn{
@@ -219,8 +262,8 @@
 				margin-top: 15px;
 				
 				border-radius: 17px;
-				padding-top: 11px;
-				padding-bottom: 11px;
+				padding-top: 10px;
+				padding-bottom: 10px;
 				
 				text-align: center;
 				cursor: pointer;
@@ -232,51 +275,169 @@
 	        }	
 	
 	        .black-wall{
-	            position: absolute;
+	            position: fixed;
 	            left: 0;
-	            top: 0;
-	            width: 100%;
-	            height: 100%;
+	            bottom: 0;
+	            width: 100vw;
+	            height: 100vh;
 	            background-color: rgba(0,0,0,0.1);
+	        }
+			
+			@media (max-width: 1000px){
+		        .calendar {
+					width: calc(100% - 2px);
+		        }     
+		        
+	            .calendar-date > div > .each-date > .date-header{
+		            font-size: 0.5em;
+		            
+		        	padding-left: 5px;
+		        	padding-top: 5px;
+		        }
+		        
+		        .calendar-week > div{
+		        	padding-top: 5px;
+		        	padding-bottom: 5px;
+		            font-weight: 500;
+		            font-size: 0.8em;
+		        }
+		        
+		        .calendar-info .common-btn{
+					
+					margin-right: 10px;
+					font-size: 0.8em;
+					font-weight: bold;
+					
+					border-radius: 10px;
+					padding-top: 5px;
+					padding-bottom: 5px;
+					padding-left: 7px;
+					padding-right: 7px;
+		        }
+		        
+		        .calendar-header{
+		        	padding-top: 10px;
+		        	padding-bottom: 10px;
+		            font-size: 0.9em;
+		            font-weight: bold;
+		        }
+		        
+		        .date-reserv > .btn-reserv{
+		        	border-radius: 5px;
+		        	padding-top: 3px;
+		        	padding-bottom: 2px;
+		        	padding-left: 4px;
+		        	padding-right: 4px;
+		        	font-size: 0.6em;
+		        }
+		        
+		        .date-reserv > .btn-reserv > span {
+		        	border-radius: 6px;
+		        	width: 12px;
+		        	height: 12px;
+		        	padding-bottom: 0px;
+		        	font-size: 0.7em;
+		        }
+		        
 	        }
 	        
         </style>
     </head>
     <body>
-    	<div class="calendar-container">
-	        <div class="calendar">
-	        	<div class="calendar-header">
-	        		<div onClick="prevCalendar();">&#60;</div>
-	        		<div>
-	        			<span id="calYear"></span>년
-	        			&nbsp;
-		                <span id="calMonth"></span>월
-	        		</div>
-	        		<div onClick="nextCalendar();">&#62;</div>
-	        	</div>
-	        	<div class="calendar-week">
-	        		<div>일</div>
-	        		<div>월</div>
-	        		<div>화</div>
-	        		<div>수</div>
-	        		<div>목</div>
-	        		<div>금</div>
-	        		<div>토</div>
-	        	</div>
-	        	<div class="calendar-date">
-	        	
-	        	</div>
+    	<section>
+	    	<div class="calendar-container">
+		        <div class="calendar">
+		        	<div class="calendar-header">
+		        		<div onClick="prevCalendar();">&#60;</div>
+		        		<div>
+		        			<span id="calYear"></span>년
+		        			&nbsp;
+			                <span id="calMonth"></span>월
+		        		</div>
+		        		<div onClick="nextCalendar();">&#62;</div>
+		        	</div>
+		        	<div class="calendar-info">
+		        		<div>
+			        		<div class="common-btn">방문 상담 예약</div>
+		        		</div>
+		        	</div>
+		        	<div class="calendar-week">
+		        		<div class="holiday">일</div>
+		        		<div>월</div>
+		        		<div>화</div>
+		        		<div>수</div>
+		        		<div>목</div>
+		        		<div>금</div>
+		        		<div>토</div>
+		        	</div>
+		        	<div class="calendar-date">
+		        		<div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        		</div>
+		        		<div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        		</div>
+		        		<div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        		</div>
+		        		<div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        		</div>
+		        		<div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        		</div>
+		        		<div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        			<div class="each-date"></div>
+		        		</div>
+		        	</div>
+			    </div>
 		    </div>
-	    </div>
+    	</section>
 	    
-	    <div class="black-wall" onclick="f_close()"></div>
-    	<div class="common-modal">
+ 	    <div class="black-wall display-none" onclick="f_close()"></div>
+    	<div class="common-modal display-none">
     		<div id="modalContent">
     			
     		</div>
     		<div>
-    			<div class="common-btn">확인</div>
-    			<div class="common-btn">취소</div>
+    			<div class="common-btn" id="confirmBtn">확인</div>
+    			<div class="common-btn" onclick="f_close()">취소</div>
     		</div>
     	</div>
         
@@ -289,37 +450,46 @@
 	        let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
 	        let today = new Date();     // 페이지를 로드한 날짜를 저장
 	        today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
+	        
+	        let v_reservList = JSON.parse('${reservList}');
+	        console.log(v_reservList);
 	
 	        // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
 	        function buildCalendar() {
 	
 	            let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
 	            let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
-	
-	            let calendarDate = document.querySelector(".calendar-date");
+	            let calendarDate = document.querySelectorAll(".each-date");
+
+	            // 1일의 요일 (0:일요일, 1:월요일, ...);
+	            let v_firstDay = firstDate.getDay();
+	            // 마지막날 (1월이면 31 리턴)
+	            let v_lastDay = lastDate.getDate();
+	            
 	            document.getElementById("calYear").innerText = nowMonth.getFullYear();             // 연도 숫자 갱신
 	            document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);  // 월 숫자 갱신
 	
-	            // 이전 출력결과가 남아있는 경우 초기화
-	            calendarDate.innerHTML = "";
+	            // 날짜칸 초기화
+	            for(let i = 0; i < calendarDate.length; i++){
+	            	calendarDate[i].innerHTML = "";
+	            	calendarDate[i].style.width = (calendarDate[0].parentElement.offsetWidth / 7) + "px";
+	            	calendarDate[i].style.height = (calendarDate[0].parentElement.offsetWidth / 7) * 0.7 + "px";
+	            	calendarDate[i].classList.remove("pastDay", "today", "futureDay", "choiceDay");
+	            }
 	            
 	            // 날짜 칸 카운팅
 	            let v_count = 0;
 	            
 	         	// 이번달 1일의 요일만큼 칸 추가
 	            for (let j = 0; j < firstDate.getDay(); j++) {  
-	                let newDIV = document.createElement("div");
 	                v_count++;
-	                calendarDate.appendChild(newDIV);
 	            }
 	
 	         	// day는 날짜를 저장하는 변수, 이번달 마지막날까지 증가시키며 반복  
 	            for (let nowDay = firstDate; nowDay <= lastDate; nowDay.setDate(nowDay.getDate() + 1)) {   
 	
-	                let newDIV = document.createElement("div");
 	                let newDate = document.createElement("div");
 	                newDate.className = "date-header";
-	                v_count++;
 	                newDate.innerHTML = leftPad(nowDay.getDate());        // 추가한 열에 날짜 입력
 	                
 	                if(nowDay.getDay() == 0 && !(nowDay < today)){
@@ -327,64 +497,55 @@
 	                }
 	                
 	                if (nowDay < today) {                       // 지난날인 경우
-	                    newDIV.classList.add("pastDay");
+	                	calendarDate[v_count].classList.add("pastDay");
 	                }else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우           
-	                    newDIV.classList.add("today");
-	                    newDIV.onclick = function (){ 
+	                	calendarDate[v_count].classList.add("today");
+	                	calendarDate[v_count].onclick = function (){ 
 	                    	choiceDate(this); 
 	                    }
 	                }else {                                      // 미래인 경우
-	                    newDIV.classList.add("futureDay");
-	                    newDIV.onclick = function(){ 
+	                	calendarDate[v_count].classList.add("futureDay");
+	                	calendarDate[v_count].onclick = function(){ 
 	                    	choiceDate(this); 
 	                    }
 	                }
 	                
-	                newDIV.appendChild(newDate);
+	                calendarDate[v_count].appendChild(newDate);
 	                
 	                // 임시로 예약자 담기
+	                
 	                let newReserv = document.createElement("div");
 	                newReserv.className = "date-reserv";
 	                let nameReserv = document.createElement("div");
 	                nameReserv.className = "btn-reserv";
-	                nameReserv.innerHTML = "정*웅 외";
+	                nameReserv.innerHTML = "정*웅";
 	                let newSpan = document.createElement("span");
 	                newSpan.innerHTML = "3";
 	                nameReserv.appendChild(newSpan);
 	                newReserv.appendChild(nameReserv);
-	                newDIV.appendChild(newReserv);
-	                //
+	                calendarDate[v_count].appendChild(newReserv);
 	                
-	                calendarDate.appendChild(newDIV);
+	                v_count++;
 	            }
 	         	
-	         	// 5줄 넘어가면 달력의 컨테이너 크기 조정
-         		let calContainer = document.querySelector(".calendar");
-	         	if(v_count > 35){
-	         		let v_dates = document.querySelectorAll(".calendar-date > div");
-	         		for(let i = 0; i < v_dates.length; i++){
-	         			v_dates[i].style.height = "calc(100%/6 - 1px)";
-	         		}
-	         		calContainer.style.height = calContainer.offsetHeight + v_dates[0].offsetHeight + 6 + "px";
-	         		
-	         		// 마지막까지 채움 (6줄인 경우)
-		            for (let j = 0; j < 42 - v_count; j++) {  
-		                let newDIV = document.createElement("div");
-		                newDIV.style.height = "calc(100%/6 - 1px)";
-		                calendarDate.appendChild(newDIV);
-		            }
-	         	}else{
-	         		let v_container = calContainer.parentElement;
-	         		calContainer.style.height = v_container.offsetHeight + "px";
-	         		
-	         		// 마지막까지 채움 (5줄인 경우)
-	         		// *매우 낮은 확률로 2월달은 4줄(row)일 수 있으나 개발사항에 고려하지 않음
-		            for (let j = 0; j < 35 - v_count; j++) {  
-		                let newDIV = document.createElement("div");
-		                newDIV.style.height = "calc(100%/5 - 1px)";
-		                calendarDate.appendChild(newDIV);
-		            }
-	         	}
+	         	// 4~6줄에 따라 줄(row) 조정
+         		let calDateDivs = document.querySelectorAll(".calendar-date > div");
+
+     			calDateDivs[4].style.display = "flex";
+     			calDateDivs[5].style.display = "flex";
+         		
+     			// 4줄이 되는 경우
+         		if(v_firstDay == 0 && v_lastDay == 28){
+         			calDateDivs[4].style.display = "none";
+         			calDateDivs[5].style.display = "none";
+         		}else if(!((v_firstDay == 5 && v_lastDay == 31) || (v_firstDay == 6 && v_lastDay >= 30))){
+         			// 5줄인 경우
+         			calDateDivs[5].style.display = "none";
+         		}
+	         	
+     			// v_reservList 로부터 화면에 그릴 데이터 만들기
+     			// 날짜별로 묶어서 몇명인지 파악
+	         	
 	        }
 	
 	        // 날짜 선택 (클릭 이벤트)
@@ -397,14 +558,16 @@
 	            let v_choiceDate = document.getElementById("calYear").innerText + "-" + document.getElementById("calMonth").innerText + "-" + newDIV.children[0].innerHTML;
 	            
 	            
-	            location.href = '${pageContext.request.contextPath }/insertReservView?choiceDate=' + v_choiceDate;
+	            //location.href = '${pageContext.request.contextPath }/insertReservView?choiceDate=' + v_choiceDate;
 	            
 	        }
 	
 	        // 이전달 버튼 클릭
 	        function prevCalendar() {
 	            nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() - 1, nowMonth.getDate());   // 현재 달을 1 감소
-	            buildCalendar();    // 달력 다시 생성
+	            
+	            let v_choiceDate = nowMonth.getFullYear() + "-" + leftPad(nowMonth.getMonth() + 1) + "-" + leftPad(nowMonth.getDate());
+	            f_reservList(v_choiceDate);
 	        }
 	        // 다음달 버튼 클릭
 	        function nextCalendar() {
@@ -413,8 +576,29 @@
 	        	// 즉, 캘린더의 Month는 오늘 Month에 대해 다다음달까지만 보여준다.
 	        	if(nowMonth.getMonth() <= todayMonth.getMonth() + 2){        		
 		            nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, nowMonth.getDate());   // 현재 달을 1 증가
-		            buildCalendar();    // 달력 다시 생성
+		            let v_choiceDate = nowMonth.getFullYear() + "-" + leftPad(nowMonth.getMonth() + 1) + "-" + leftPad(nowMonth.getDate());
+		            f_reservList(v_choiceDate);
 	        	}
+	        }
+	        
+	        function f_reservList(p_date){
+				let v_ajax = new XMLHttpRequest();
+	            
+	            let v_url = '${pageContext.request.contextPath }/reservList';
+	            
+	            v_ajax.open('POST', v_url);
+	            
+	            v_ajax.setRequestHeader("Content-Type", "application/json");
+	            
+	            v_ajax.onload = function(){
+	            	console.log(v_ajax.response);
+	            	
+	            	v_reservList = JSON.parse(v_ajax.response);
+	            	
+	            	buildCalendar();    
+	            }
+	            
+	            v_ajax.send(p_date);
 	        }
 	
 	        // input값이 한자리 숫자인 경우 앞에 '0' 붙혀주는 함수
@@ -424,7 +608,16 @@
 	            }
 	            return value;
 	        }
-	    </script>        
-    </body>
+	        
+	        const v_modalContent = document.getElementById("modalContent");
+	        const v_confirmBtn = document.getElementById("confirmBtn");
+	        
+	        function f_close(){
+	        	document.querySelector(".black-wall").classList.add("display-none");
+	        	document.querySelector(".common-modal").classList.add("display-none");
+	        }
+	        
+        </script>
+	</body>
 </html>
 

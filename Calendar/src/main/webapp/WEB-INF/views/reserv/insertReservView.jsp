@@ -145,7 +145,7 @@
 	        
 	        .reserv-container{
 	        	width: 500px;
-	        	height: 600px;
+	        	height: 550px;
 	        }
 	        
 	        .reserv-container > .time-table{
@@ -434,7 +434,7 @@
 			        		<div onClick="nextCalendar();">&#62;</div>
 			        	</div>
 			        	<div class="calendar-week">
-			        		<div>일</div>
+			        		<div class="holiday">일</div>
 			        		<div>월</div>
 			        		<div>화</div>
 			        		<div>수</div>
@@ -536,7 +536,7 @@
 							  <label for="inputPw"><span>* </span>비밀번호</label>
 							  <input name="reservPw" type="tel" pattern="\d*" class="txt-input" id="inputPw" placeholder="4자리 숫자 입력" value="" >
 							</div>
-						    <p>비밀번호는 상담 예약 확인 및 수정/삭제를 위해 사용됩니다.</p>
+						    <p><sup>*</sup>비밀번호는 상담 예약 확인 및 수정/삭제를 위해 사용됩니다.</p>
 						    
 						    <button type="button" id="reservBtn">상담 예약</button>
 			    		</form>
@@ -603,7 +603,6 @@
 	            
 	         	// 이번달 1일의 요일만큼 v_count 증가 추가
 	            for (let j = 0; j < firstDate.getDay(); j++) {  
-
 	                v_count++;
 	            }
 	
@@ -642,9 +641,7 @@
 	            }
 	         	
 	         	
-	         	// 7줄 까지 넘어가면 v_count 에 따라 줄(row) 조정
-         		
-	         	
+	         	// 4~6줄에 따라 줄(row) 조정
          		let calDateDivs = document.querySelectorAll(".calendar-date > div");
 
      			calDateDivs[4].style.display = "flex";
@@ -765,34 +762,7 @@
 	        v_reservBtn.addEventListener("click", function(){
 	        	// validation 결과에 따라 이후 작업
 	        	
-	        	let v_valid = f_validation();
-	        	if(v_valid == 0){
-	        		document.querySelector("#modalContent").innerHTML = "<p>상담 예약 시간을 선택해주세요.</p>";
-	        		f_show();
-	            	document.querySelector("#confirmBtn").addEventListener("click", function(){
-	            		f_close();
-	            	});
-	        		return;
-	        	}else if(v_valid == 1) {
-	        		document.querySelector("#modalContent").innerHTML = "<p>이름을 입력해주세요.</p>";
-	        		f_show();
-	            	document.querySelector("#confirmBtn").addEventListener("click", function(){
-	            		f_close();
-	            	});
-	        		return;
-	        	}else if(v_valid == 2){
-	        		document.querySelector("#modalContent").innerHTML = "<p>올바른 연락처를 입력해주세요.</p>";
-	        		f_show();
-	            	document.querySelector("#confirmBtn").addEventListener("click", function(){
-	            		f_close();
-	            	});
-	        		return;
-	        	}else if(v_valid == 3){
-	        		document.querySelector("#modalContent").innerHTML = "<p>비밀번호 4자리수를 입력해주세요.</p>";
-	        		f_show();
-	            	document.querySelector("#confirmBtn").addEventListener("click", function(){
-	            		f_close();
-	            	});
+	        	if(!f_validation()){
 	        		return;
 	        	}
 	        	
@@ -806,6 +776,7 @@
 	            
 	            v_ajax.open('POST', v_url);
 	            
+	            // POST 방식으로 AJAX 요청시 헤더 설정을 해주어야 한다.
 	            v_ajax.setRequestHeader("Content-Type", "application/json");
 	            let v_data = {
 	            	reservName : v_inputName.value,
@@ -822,13 +793,14 @@
 	            	if(v_ajax.response == 'true'){
 		            	document.querySelector("#modalContent").innerHTML = "<p>" + '<svg width="30" height="20" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 11h6v1h-7v-9h1v8z"/></svg>' + v_inputDate.value + "&nbsp;" + v_inputTime.value + "</p>" + "<p>상담 예약 신청하시겠습니까?</p>";
 		            	document.querySelector("#confirmBtn").addEventListener("click", function(){
-		            		v_insertForm.send();
+		            		v_insertForm.action = '${pageContext.request.contextPath }/insertReservDo';
+		            		v_insertForm.submit();
 		            	});
 	            	}else{
 	            		document.querySelector("#modalContent").innerHTML = "<p>" + '<svg width="30" height="20" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 11h6v1h-7v-9h1v8z"/></svg>' + v_inputDate.value + "&nbsp;" + v_inputTime.value + "</p>" + "<p>다른 날짜에 이미 예약신청중입니다.</p><p>기존 예약을 취소하고 현재 날짜로 다시 예약 신청하겠습니까?</p>";
 		            	document.querySelector("#confirmBtn").addEventListener("click", function(){
 		            		v_insertForm.action = '${pageContext.request.contextPath }/updateReservDo';
-		            		v_insertForm.send();
+		            		v_insertForm.submit();
 		            	});
 	            	}
 	            	
@@ -878,16 +850,36 @@
 	        	let pwRegex = /^[0-9]{4}$/;
 	        	
 	        	if(v_inputTime.value.length == 0){
-	        		return 0;
+	        		document.querySelector("#modalContent").innerHTML = "<p>상담 예약 시간을 선택해주세요.</p>";
+	        		f_show();
+	            	document.querySelector("#confirmBtn").addEventListener("click", function(){
+	            		f_close();
+	            	});
+	        		return false;
 	        	}else if(v_inputName.value.length == 0){
-	        		return 1;
+	        		document.querySelector("#modalContent").innerHTML = "<p>이름을 입력해주세요.</p>";
+	        		f_show();
+	            	document.querySelector("#confirmBtn").addEventListener("click", function(){
+	            		f_close();
+	            	});
+	        		return false;
 	        	}else if(!phoneRegex.test(v_inputPhone.value)){
-	        		return 2;
+	        		document.querySelector("#modalContent").innerHTML = "<p>올바른 연락처를 입력해주세요.</p>";
+	        		f_show();
+	            	document.querySelector("#confirmBtn").addEventListener("click", function(){
+	            		f_close();
+	            	});
+	        		return false;
 	        	}else if(!pwRegex.test(v_inputPw.value)){
-	        		return 3;
+	        		document.querySelector("#modalContent").innerHTML = "<p>비밀번호 4자리수를 입력해주세요.</p>";
+	        		f_show();
+	            	document.querySelector("#confirmBtn").addEventListener("click", function(){
+	            		f_close();
+	            	});
+	        		return false;
 	        	}
 	        	
-	        	return 4;
+	        	return true;
 	        }
 	        
 	    </script>        

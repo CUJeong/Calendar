@@ -3,18 +3,17 @@
 <mapper namespace="com.cuj.calendar.reserv.dao.IReservDAO">
 	
 	<select id="getReservList" resultType="com.cuj.calendar.reserv.vo.ReservVO">
-		SELECT 
-		      a.board_no
-		    , a.board_title
-		    , a.board_content
-		    , a.mem_id
-		    , b.mem_name
-		    , TO_CHAR(a.board_date, 'MM/dd HH:mm') AS board_date
-		FROM boards a, members b
+		SELECT
+		      TO_CHAR(reserv_date, 'yyyy-mm-dd') AS reserv_date
+		    , reserv_time 
+		    , reserv_name 
+		    , reserv_phone 
+		    , reserv_pw 
+		    , del_yn 
+		FROM reserv
 		WHERE 1=1
-		  AND a.mem_id = b.mem_id
-		  AND a.del_yn = 'N'
-		ORDER BY a.board_no DESC	
+		  AND del_yn = 'N'
+		  AND SUBSTR(#{choiceDate}, 1, 7) = SUBSTR(TO_CHAR(reserv_date, 'yyyy-mm-dd'), 1, 7)
 	</select>
 	
 	<insert id="insertReserv" parameterType="com.cuj.calendar.reserv.vo.ReservVO">
@@ -70,6 +69,16 @@
 		WHERE 1=1
 		  AND reserv_name = #{reservName}
 		  AND reserv_phone = #{reservPhone}	
+	</update>
+	
+	<update id="delPastReserv" parameterType="com.cuj.calendar.reserv.vo.ReservVO">
+		UPDATE 
+		    reserv
+		SET 
+		    del_yn = 'Y'
+		WHERE 1=1
+          AND del_yn = 'N'
+		  AND reserv_date <![CDATA[<]]> SYSDATE	
 	</update>
 	
 	

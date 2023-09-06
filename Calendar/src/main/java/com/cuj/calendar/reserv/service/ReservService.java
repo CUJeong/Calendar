@@ -20,8 +20,8 @@ public class ReservService {
 	IReservDAO dao;
 	
 	// 예약 목록 불러오기
-	public List<ReservVO> getReservList(){
-		List<ReservVO> result = dao.getReservList();
+	public List<ReservVO> getReservList(String choiceDate){
+		List<ReservVO> result = dao.getReservList(choiceDate);
 		
 		return result;
 	};
@@ -72,6 +72,12 @@ public class ReservService {
 	// 예약 취소
 	public int cancelReserv(ReservVO reserv) {
 		int result = dao.cancelReserv(reserv);
+		return result;
+	}
+	
+	// 날짜 지난 내역들은 del_yn = Y 처리
+	public int delPastReserv() {
+		int result = dao.delPastReserv();
 		return result;
 	}
 	

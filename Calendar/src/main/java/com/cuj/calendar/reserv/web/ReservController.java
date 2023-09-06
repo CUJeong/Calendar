@@ -32,12 +32,37 @@ public class ReservController {
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@RequestMapping("/reservView")
-	public String reservView() {
+	public String reservView(Model model) {
 		
+		reservService.delPastReserv();
+		
+		Date date = new Date();
+		
+		List<ReservVO> reservList = reservService.getReservList(sdf.format(date));
+		
+		Gson gson = new Gson();
+		
+		String result = gson.toJson(reservList);
+		
+		model.addAttribute("reservList", result);
 		
 		return "reserv/reservView";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/reservList", produces="text/plain;charset=UTF-8") // ajax 통신으로 한글을 보낼시 UTF-8 설정 추가
+	public String reservList(@RequestBody String choiceDate) { // @RequestBody 넣어도 객체가 아니면 그냥 요청시 보낸 문자열 통째로 온다.
+		
+		System.out.println(choiceDate);
+		
+		List<ReservVO> reservList = reservService.getReservList(choiceDate);
+		
+		Gson gson = new Gson();
+		
+		String result = gson.toJson(reservList);
+		
+		return result;
+	}
 	
 	@RequestMapping("/insertReservView")
 	public String insertReservView(Model model, String choiceDate) {
@@ -110,6 +135,15 @@ public class ReservController {
 		
 		System.out.println(reserv);
 		
+		int cnt = reservService.cancelReserv(reserv);
+		
+		if(cnt == 1) {
+			try {
+				reservService.insertReserv(reserv);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
 		return "redirect:/reservView";
 	}
