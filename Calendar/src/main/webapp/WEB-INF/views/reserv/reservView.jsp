@@ -180,6 +180,66 @@
 	        .holiday{
 	        	color: rgb(252,76,78);
 	        }
+	        
+			.display-none{
+				display: none;
+			}
+			
+	        .common-modal{
+	            position: fixed;
+	            left: 50%;
+	            top: 50%;
+	            transform: translate(-50%, -50%);
+	            width: 400px;
+	            height: 300px;
+	            background-color: white;
+	            border-radius: 20px;
+	            box-shadow: 1px 1px 6px 1px #0004;
+	        }
+	        
+	        .common-modal > div:nth-child(1){
+	        	height: 70%;
+	        }
+	        
+	        .common-modal > div:nth-child(2){
+	        	height: 30%;
+	        	display: flex;
+	        	justify-content: center;
+	        	align-items: center;
+	        }
+	        
+	        .common-modal .common-btn{
+	        	background-color: #0A174E;
+				width: 30%;
+				height: 30%;
+				
+				margin-left: 20px;
+				color: white;
+				font-size: 1.3em;
+				margin-top: 15px;
+				
+				border-radius: 17px;
+				padding-top: 11px;
+				padding-bottom: 11px;
+				
+				text-align: center;
+				cursor: pointer;
+	        }
+	
+	        .common-modal .common-btn:nth-child(2){
+	        	background-color: rgb(211,211,211);
+				color: #333;
+	        }	
+	
+	        .black-wall{
+	            position: absolute;
+	            left: 0;
+	            top: 0;
+	            width: 100%;
+	            height: 100%;
+	            background-color: rgba(0,0,0,0.1);
+	        }
+	        
         </style>
     </head>
     <body>
@@ -208,6 +268,17 @@
 	        	</div>
 		    </div>
 	    </div>
+	    
+	    <div class="black-wall" onclick="f_close()"></div>
+    	<div class="common-modal">
+    		<div id="modalContent">
+    			
+    		</div>
+    		<div>
+    			<div class="common-btn">확인</div>
+    			<div class="common-btn">취소</div>
+    		</div>
+    	</div>
         
 	    <script>
 	 		// 웹 페이지가 로드되면 buildCalendar 실행
@@ -323,7 +394,10 @@
 	            }
 	            newDIV.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
 	            
-	            // 서버에 AJAX 요청 보낸 후 응답 받아온 걸로 화면에 예약 가능 시간 그려줘야함
+	            let v_choiceDate = document.getElementById("calYear").innerText + "-" + document.getElementById("calMonth").innerText + "-" + newDIV.children[0].innerHTML;
+	            
+	            
+	            location.href = '${pageContext.request.contextPath }/insertReservView?choiceDate=' + v_choiceDate;
 	            
 	        }
 	

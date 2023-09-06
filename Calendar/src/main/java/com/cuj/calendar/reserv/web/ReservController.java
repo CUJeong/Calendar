@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -39,13 +40,25 @@ public class ReservController {
 	
 	
 	@RequestMapping("/insertReservView")
-	public String insertReservView(Model model) {
+	public String insertReservView(Model model, String choiceDate) {
 		
-		Calendar cal = Calendar.getInstance();
-		List<String> timeList = reservService.getEnableTimeList(sdf.format(cal.getTime()));
+		System.out.println(choiceDate);
 		
-		List<EnableTime> enableTimeList = reservService.makeEnableTimeList(timeList, cal.getTime());
+		Date date = new Date();
+		try {
+			if(choiceDate == null) {
+				choiceDate = sdf.format(date);
+			}
+			date = sdf.parse(choiceDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
+		List<String> timeList = reservService.getEnableTimeList(choiceDate);
+		
+		List<EnableTime> enableTimeList = reservService.makeEnableTimeList(timeList, date);
+		
+		model.addAttribute("choiceDate", choiceDate);
 		model.addAttribute("enableTimeList", enableTimeList);
 		
 		return "reserv/insertReservView";
@@ -59,6 +72,9 @@ public class ReservController {
 		
 		Date date = new Date();
 		try {
+			if(choiceDate == null) {
+				choiceDate = sdf.format(date);
+			}
 			date = sdf.parse(choiceDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -87,6 +103,28 @@ public class ReservController {
 		}	
 		
 		return "redirect:/reservView";
+	}
+	
+	@PostMapping("/updateReservDo")
+	public String updateReservDo(ReservVO reserv) {
+		
+		System.out.println(reserv);
+		
+		
+		return "redirect:/reservView";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/enableReservCheckDo")
+	public String enableReservCheckDo(@RequestBody ReservVO reserv) {
+		
+		System.out.println("enableReservCheckDo: " + reserv);
+		
+		int cnt = reservService.reservDupleCheck(reserv);
+		
+		String result = (cnt == 0) ? "true" : "false";
+		
+		return result;
 	}
 	
 	

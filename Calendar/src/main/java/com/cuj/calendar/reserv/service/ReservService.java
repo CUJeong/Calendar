@@ -63,4 +63,16 @@ public class ReservService {
 		return enableTimeList;
 	}
 	
+	// 예약한 상담자인지 확인
+	public int reservDupleCheck(ReservVO reserv) {
+		int result = dao.reservDupleCheck(reserv);
+		return result;
+	}
+	
+	// 예약 취소
+	public int cancelReserv(ReservVO reserv) {
+		int result = dao.cancelReserv(reserv);
+		return result;
+	}
+	
 }

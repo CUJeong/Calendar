@@ -18,4 +18,10 @@ public interface IReservDAO {
 	// 해당 날짜의 예약 가능 시간 목록 불러오기
 	public List<String> getEnableTimeList(String reservDate);
 	
+	// 예약한 상담자인지 확인
+	public int reservDupleCheck(ReservVO reserv);
+	
+	// 예약 취소
+	public int cancelReserv(ReservVO reserv);
+	
 }

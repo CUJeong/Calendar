@@ -11,7 +11,8 @@
 		    , b.mem_name
 		    , TO_CHAR(a.board_date, 'MM/dd HH:mm') AS board_date
 		FROM boards a, members b
-		WHERE a.mem_id = b.mem_id
+		WHERE 1=1
+		  AND a.mem_id = b.mem_id
 		  AND a.del_yn = 'N'
 		ORDER BY a.board_no DESC	
 	</select>
@@ -44,10 +45,32 @@
 		        SELECT reserv_time
 		        FROM reserv
 		        WHERE reserv_date = #{reservDate}
+		          AND del_yn = 'N'
 		    )
 		ORDER BY 1	
 	</select>
 	
+	<!-- SELECT문은 결과가 숫자여도 resultType을 명시해주어야 함 -->
+	<select id="reservDupleCheck" parameterType="com.cuj.calendar.reserv.vo.ReservVO" resultType="int">
+		SELECT
+		    COUNT(*)
+		FROM 
+		    reserv
+		WHERE 1=1
+		  AND reserv_name = #{reservName}
+		  AND reserv_phone = #{reservPhone}
+		  AND del_yn = 'N'	
+	</select>
+	
+	<update id="cancelReserv" parameterType="com.cuj.calendar.reserv.vo.ReservVO">
+		UPDATE 
+		    reserv
+		SET 
+		    del_yn = 'Y'
+		WHERE 1=1
+		  AND reserv_name = #{reservName}
+		  AND reserv_phone = #{reservPhone}	
+	</update>
 	
 	
 </mapper>
