@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,6 +52,19 @@ public class ReservController {
 	}
 	
 	@ResponseBody
+	@RequestMapping("/cancelReserv")
+	public String cancelReserv(@RequestBody ReservVO reserv) {
+		
+		System.out.println(reserv);
+
+		// 삭제(del_yn = Y)가 성공적으로 끝나면 true, 아니면 false 리턴
+		int cnt = reservService.cancelReserv(reserv);
+		String result = (cnt == 1) ? "true" : "false";
+		
+		return result;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/reservList", produces="text/plain;charset=UTF-8") // ajax 통신으로 한글을 보낼시 UTF-8 설정 추가
 	public String reservList(@RequestBody String choiceDate) { // @RequestBody 넣어도 객체가 아니면 그냥 요청시 보낸 문자열 통째로 온다.
 		
@@ -64,14 +79,30 @@ public class ReservController {
 		return result;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/getReserv")
+	public Map<String, Object> getReserv(@RequestBody ReservVO reserv) {
+		
+		System.out.println("getReserv: " + reserv);
+		
+		ReservVO result = reservService.getReserv(reserv);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("data", result);
+		
+		return map;
+	}
+	
 	@RequestMapping("/insertReservView")
-	public String insertReservView(Model model, String choiceDate) {
+	public String insertReservView(Model model, String choiceDate, ReservVO reserv) {
 		
 		System.out.println(choiceDate);
+		System.out.println(reserv);
 		
 		Date date = new Date();
 		try {
-			if(choiceDate == null) {
+			if(choiceDate == null || choiceDate.isEmpty()) {
 				choiceDate = sdf.format(date);
 			}
 			date = sdf.parse(choiceDate);
@@ -84,6 +115,7 @@ public class ReservController {
 		List<EnableTime> enableTimeList = reservService.makeEnableTimeList(timeList, date);
 		
 		model.addAttribute("choiceDate", choiceDate);
+		model.addAttribute("reserv", reserv);
 		model.addAttribute("enableTimeList", enableTimeList);
 		
 		return "reserv/insertReservView";
@@ -154,8 +186,8 @@ public class ReservController {
 		
 		System.out.println("enableReservCheckDo: " + reserv);
 		
+		// 중복 체크 결과가 0이면 true (중복되지 않음), 아니면 false 리턴
 		int cnt = reservService.reservDupleCheck(reserv);
-		
 		String result = (cnt == 0) ? "true" : "false";
 		
 		return result;

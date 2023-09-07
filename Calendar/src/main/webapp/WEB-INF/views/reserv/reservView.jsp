@@ -154,8 +154,8 @@
 	        	border-radius: 12px;
 	        	padding-top: 5px;
 	        	padding-bottom: 5px;
-	        	padding-left: 10px;
-	        	padding-right: 10px;
+	        	width: 50%;
+	        	text-align: center;
 	        	position: relative;
 	        	color: white;
 	        	transform: translate(0, -20%);
@@ -216,6 +216,7 @@
 			}
 			
 	        .common-modal{
+	        	font-family: 'Montserrat', sans-serif;
 	            position: fixed;
 	            left: 50%;
 	            top: 50%;
@@ -247,8 +248,8 @@
 	        }
 	        
 	        .common-modal > div:nth-child(1) > p{
-	        	margin-top: 20px;
-	        	margin-bottom: 5px;
+	        	margin-bottom: 0px;
+	        	font-size: 0.8em;
 	        }
 	        
 	        .common-modal .common-btn{
@@ -282,6 +283,92 @@
 	            height: 100vh;
 	            background-color: rgba(0,0,0,0.1);
 	        }
+	        
+			.common-toast{
+	            position: fixed;
+	            left: 50%;
+	            bottom: 0%;
+	            transform: translate(-50%, -50%);
+	            width: 500px;
+	            padding-top: 20px;
+	            padding-bottom: 20px;
+	            background-color: #0A174E;
+	            border-radius: 20px;
+	            box-shadow: 1px 1px 6px 1px #0004;
+	            color: white;
+				font-size: 1.2em;
+				font-weight: bold;
+				text-align: center;
+				cursor: pointer;
+	        }
+	        
+	        .second-modal span{
+	        	background-color: #dc3545;
+	        	color: white;
+	        	padding-left: 5px;
+	            padding-right: 5px;
+	        	padding-top: 3px;
+	            padding-bottom: 3px;
+	            border-radius: 5px;
+	            font-weight: bold;
+	            cursor: pointer;
+	        }
+	        
+	        input{
+			    font-family: 'Noto Sans KR','Noto Sans Korean', "Nanum Gothic", sans-serif !important;
+			    -webkit-appearance: none;
+			    -webkit-border-radius: 0;
+			    border: 0;
+			    outline: none;
+			    font-size: 10px;
+			}
+			input[type="number"]::-webkit-outer-spin-button,
+			input[type="number"]::-webkit-inner-spin-button {
+			    -webkit-appearance: none;
+			    margin: 0;
+			}
+			input::placeholder{
+			  color: #aaa
+			}
+			input[type="number"]{
+				-webkit-text-security: disc;
+			}
+			.dust-class{
+			  width: 90%;
+			  margin-top: 10px;
+			  transform: translate(-5%, 0);
+			  box-sizeing: border-box;
+			  position: relative;
+			}
+			.dust-class label{
+			  display: inline-block;
+			  position: absolute;
+			  top: 0px;
+			  left: 14px;
+			  padding-left: 10px;
+			  padding-right: 10px;
+			  padding-top: 5px;
+			  padding-bottom: 5px;
+			  background: white;
+			  font-size: 14px;
+			  color: #444;
+			  font-weight: bold;
+			}
+			.dust-class label span{
+			  color: #da4841;
+			  font-weight: bold;
+			  vertical-align: -1px;
+			}
+			.dust-class input{
+			    width: 100%;
+			    border: 2px solid rgb(245, 208, 66) !important;
+			    font-size: 0.8rem;
+			    line-height: 1.2;
+			    letter-spacing: -0.04rem;
+			    border-radius: 8px;
+			    padding: 16px;
+			    margin-top: 12px;
+			}
 			
 			@media (max-width: 1000px){
 		        .calendar {
@@ -339,6 +426,17 @@
 		        	font-size: 0.7em;
 		        }
 		        
+		        .common-modal{
+		            width: 80%;
+		        }
+		        
+		        .common-toast{
+		            width: 80%;
+		        }
+		        
+		        .second-modal h3{
+		        	font-size: 1em;
+		        }
 	        }
 	        
         </style>
@@ -358,7 +456,8 @@
 		        	</div>
 		        	<div class="calendar-info">
 		        		<div>
-			        		<div class="common-btn">방문 상담 예약</div>
+			        		<div class="common-btn" onclick="f_showModal()">상담 예약 조회</div>
+			        		<div class="common-btn" onclick="f_goReserv()">방문 상담 예약</div>
 		        		</div>
 		        	</div>
 		        	<div class="calendar-week">
@@ -432,19 +531,42 @@
 	    
  	    <div class="black-wall display-none" onclick="f_close()"></div>
     	<div class="common-modal display-none">
-    		<div id="modalContent">
-    			
+    		<div>
+    			<p>상담 예약시 입력하신 연락처와 비밀번호를 입력해주세요.</p>
+ 				<div class="dust-class">
+					<label for="inputPhone"><span>* </span>연락처</label>
+					<input name="reservPhone" type="tel" pattern="\d*" class="txt-input" id="inputPhone" placeholder="ex) 01012345678" value="">
+				</div>
+				<div class="dust-class">
+					<label for="inputPw"><span>* </span>비밀번호</label>
+					<input name="reservPw" type="number" pattern="\d*" class="txt-input" id="inputPw" placeholder="4자리 숫자 입력" value="" >
+				</div>
     		</div>
     		<div>
     			<div class="common-btn" id="confirmBtn">확인</div>
     			<div class="common-btn" onclick="f_close()">취소</div>
     		</div>
     	</div>
+    	
+    	<div class="common-modal second-modal display-none">
+    		<div id="modalContent">
+    			<p>상담 예약시 입력하신 연락처와 비밀번호를 입력해주세요.</p>
+    		</div>
+    		<div>
+    			<div class="common-btn" id="leftBtn">수정</div>
+    			<div class="common-btn" id="rightBtn">취소</div>
+    		</div>
+    	</div>
+    	
+    	<div class="common-toast display-none" onclick="f_goReserv()">
+   			방문 상담 예약
+    	</div>
         
 	    <script>
 	 		// 웹 페이지가 로드되면 buildCalendar 실행
 	        window.onload = function(){ 
 	        	buildCalendar(); 
+	        	f_showToast();
 	        }    
 	
 	        let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
@@ -456,6 +578,22 @@
 	
 	        // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
 	        function buildCalendar() {
+	        	
+     			// v_reservList 로부터 화면에 그릴 데이터 만들기
+     			// 날짜별로 묶어서 몇명인지 파악
+     			let v_drawData = {};
+     			for(let i = 0; i < v_reservList.length; i++){
+     				
+     				if(!v_drawData[v_reservList[i]["reservDate"]]){
+     					v_drawData[v_reservList[i]["reservDate"]] = {name: '', cnt: 0};
+     				}
+     				
+     				v_drawData[v_reservList[i]["reservDate"]]["cnt"] += 1;
+     				
+     				if(!v_drawData[v_reservList[i]["reservDate"]]["name"]){
+     					v_drawData[v_reservList[i]["reservDate"]]["name"] = v_reservList[i]["reservName"].charAt(0) + "**";
+     				}
+     			}
 	
 	            let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);     // 이번달 1일
 	            let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);  // 이번달 마지막날
@@ -473,7 +611,7 @@
 	            for(let i = 0; i < calendarDate.length; i++){
 	            	calendarDate[i].innerHTML = "";
 	            	calendarDate[i].style.width = (calendarDate[0].parentElement.offsetWidth / 7) + "px";
-	            	calendarDate[i].style.height = (calendarDate[0].parentElement.offsetWidth / 7) * 0.7 + "px";
+	            	calendarDate[i].style.height = (calendarDate[0].parentElement.offsetWidth / 7) * 0.8 + "px";
 	            	calendarDate[i].classList.remove("pastDay", "today", "futureDay", "choiceDay");
 	            }
 	            
@@ -512,18 +650,22 @@
 	                
 	                calendarDate[v_count].appendChild(newDate);
 	                
-	                // 임시로 예약자 담기
+	                let v_keyDate = nowDay.getFullYear() + "-" + leftPad(nowDay.getMonth()+1) + "-" + leftPad(nowDay.getDate());
 	                
-	                let newReserv = document.createElement("div");
-	                newReserv.className = "date-reserv";
-	                let nameReserv = document.createElement("div");
-	                nameReserv.className = "btn-reserv";
-	                nameReserv.innerHTML = "정*웅";
-	                let newSpan = document.createElement("span");
-	                newSpan.innerHTML = "3";
-	                nameReserv.appendChild(newSpan);
-	                newReserv.appendChild(nameReserv);
-	                calendarDate[v_count].appendChild(newReserv);
+	                
+	                // 임시로 예약자 담기
+	                if(v_drawData[v_keyDate]){
+		                let newReserv = document.createElement("div");
+		                newReserv.className = "date-reserv";
+		                let nameReserv = document.createElement("div");
+		                nameReserv.className = "btn-reserv";
+		                nameReserv.innerHTML = v_drawData[v_keyDate]["name"];
+		                let newSpan = document.createElement("span");
+		                newSpan.innerHTML = v_drawData[v_keyDate]["cnt"];
+		                nameReserv.appendChild(newSpan);
+		                newReserv.appendChild(nameReserv);
+		                calendarDate[v_count].appendChild(newReserv);
+	                }
 	                
 	                v_count++;
 	            }
@@ -542,21 +684,20 @@
          			// 5줄인 경우
          			calDateDivs[5].style.display = "none";
          		}
-	         	
-     			// v_reservList 로부터 화면에 그릴 데이터 만들기
-     			// 날짜별로 묶어서 몇명인지 파악
-	         	
 	        }
 	
 	        // 날짜 선택 (클릭 이벤트)
+	        let v_choiceDate = "";
 	        function choiceDate(newDIV) {
 	            if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
 	                document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
 	            }
 	            newDIV.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
 	            
-	            let v_choiceDate = document.getElementById("calYear").innerText + "-" + document.getElementById("calMonth").innerText + "-" + newDIV.children[0].innerHTML;
+	            // 상담 예약으로 넘어갈때 넘겨주기 위해 날짜 저장
+	            v_choiceDate = document.getElementById("calYear").innerText + "-" + document.getElementById("calMonth").innerText + "-" + newDIV.children[0].innerHTML;
 	            
+	            f_showToast();
 	            
 	            //location.href = '${pageContext.request.contextPath }/insertReservView?choiceDate=' + v_choiceDate;
 	            
@@ -611,11 +752,185 @@
 	        
 	        const v_modalContent = document.getElementById("modalContent");
 	        const v_confirmBtn = document.getElementById("confirmBtn");
+	        const v_leftBtn = document.getElementById("leftBtn");
+	        const v_rightBtn = document.getElementById("rightBtn");
+	        
+	        const v_inputPhone = document.getElementById("inputPhone");
+	        const v_inputPw = document.getElementById("inputPw");
+	        
+	     	// 상담 예약 클릭 시 모달창 띄워주기
+	        v_confirmBtn.addEventListener("click", function(){
+	        	
+	            // 서버에 AJAX 요청 보낸 후 이미 예약한 사람이 아닌지 확인 한 후
+	            // 예약 내역이 없으면 예약 진행 문구, 예약 내역이 있으면 기존 예약은 취소된다는 문구
+	            let v_ajax = new XMLHttpRequest();
+	            
+	            let v_url = '${pageContext.request.contextPath }/getReserv';
+	            
+	            
+	            v_ajax.open('POST', v_url);
+	            
+	            // POST 방식으로 AJAX 요청시 헤더 설정을 해주어야 한다.
+	            v_ajax.setRequestHeader("Content-Type", "application/json");
+	            let v_data = {
+	            	reservPhone : v_inputPhone.value,
+            		reservPw : v_inputPw.value
+	            };
+	            
+	            //let v_data = "inputName=" + v_inputName.value;
+	            //v_data += "&inputPhone=" + v_inputPhone.value;
+	            
+	            v_ajax.onload = function(){
+	            	console.log(v_ajax.response);
+	            	
+	            	let v_data = JSON.parse(v_ajax.response);
+	            	if(v_data["data"]){	            		
+		            	
+		            	let v_name = v_data["data"]["reservName"] + " 님의 예약일자";
+		            	let v_dateTime = v_data["data"]["reservDate"] + " " + v_data["data"]["reservTime"];
+		            	
+	            		v_modalContent.innerHTML = "<h3>" + v_name + "</h3>";
+	            		let v_h3 = document.createElement("h3");
+	            		let v_span = document.createElement("span");
+	            		v_span.onclick = function(){
+	            			f_cancelReserve(v_data);
+	            		}
+	            		v_span.innerHTML = "삭제";
+	            		v_h3.innerHTML = v_dateTime + " ";
+	            		v_h3.appendChild(v_span);
+	            		v_modalContent.appendChild(v_h3);
+	            		v_leftBtn.innerHTML = "변경";
+	            		v_leftBtn.style.backgroundColor = "#FFC107";
+	            		v_rightBtn.innerHTML = "닫기";
+	            		
+	            		v_leftBtn.addEventListener("click", function(){
+	            			f_goReserv(v_data);
+	            			f_close();
+	            		});
+	            		
+	            		v_rightBtn.addEventListener("click", function(){
+	            			document.querySelector(".second-modal").classList.add("display-none");
+	            			f_close();
+	            		});
+	            		
+	            		document.querySelector(".second-modal").classList.remove("display-none");
+	            	}else{
+	            		v_modalContent.innerHTML = "<h3>해당 연락처로 예약한 정보가 없거나 비밀번호가 틀립니다.</h3>";
+	            		v_leftBtn.innerHTML = "이전";
+	            		v_leftBtn.style.backgroundColor = "#0A174E";
+	            		v_rightBtn.innerHTML = "닫기";
+	            		
+	            		v_leftBtn.addEventListener("click", function(){
+	            			document.querySelector(".second-modal").classList.add("display-none");
+	            		});
+	            		
+	            		v_rightBtn.addEventListener("click", function(){
+	            			document.querySelector(".second-modal").classList.add("display-none");
+	            			f_close();
+	            		});
+	            		
+	            		document.querySelector(".second-modal").classList.remove("display-none");
+	            	}
+	            };
+	            
+	            v_ajax.send(JSON.stringify(v_data));
+	            //v_ajax.send(v_data);
+	        	
+	        });
+	        
+	        v_inputPhone.addEventListener("input", function(){
+				if(event.target.value.length > 11){
+					event.target.value = event.target.value.substr(0, event.target.value.length - 1);
+				}       	
+	        });
+	        
+	        v_inputPw.addEventListener("input", function(){
+				if(event.target.value.length > 4){
+					event.target.value = event.target.value.substr(0, event.target.value.length - 1);
+				}  
+	        });
+	        
+	        v_inputPw.addEventListener("keydown", function(){
+	        	if(event.keyCode == 13){
+	        		v_confirmBtn.click();
+	        	}
+	        });
 	        
 	        function f_close(){
 	        	document.querySelector(".black-wall").classList.add("display-none");
 	        	document.querySelector(".common-modal").classList.add("display-none");
+	        	document.querySelector(".second-modal").classList.add("display-none");
+	        	f_showToast();
 	        }
+	        
+	        function f_showModal(){
+	        	f_closeToast();
+	        	document.querySelector(".black-wall").classList.remove("display-none");
+	        	document.querySelector(".common-modal").classList.remove("display-none");
+	        }
+	        
+	        function f_showToast(){
+	        	document.querySelector(".common-toast").classList.remove("display-none");
+	        }
+	        
+	        function f_closeToast(){
+	        	document.querySelector(".common-toast").classList.add("display-none");
+	        }
+	        
+	        
+	        function f_goReserv(p_data){
+	        	console.log(p_data);
+	        	
+	        	if(p_data){
+		        	let v_queryStr = "&reservName=" + p_data["data"]["reservName"];
+		        	v_queryStr += "&reservPhone=" + p_data["data"]["reservPhone"];
+		        	
+		        	location.href = "${pageContext.request.contextPath }/insertReservView?choiceDate=" + v_choiceDate + v_queryStr;
+	        	}else{
+		        	if(!v_choiceDate){
+		        		let today = new Date();
+		        		v_choiceDate = today.getFullYear() + "-" + leftPad(today.getMonth() + 1) + "-" + leftPad(today.getDate());
+		        	}
+		        	
+		        	location.href = "${pageContext.request.contextPath }/insertReservView?choiceDate=" + v_choiceDate;
+	        	}
+	        }
+	        
+	        function f_cancelReserve(p_data){
+	        	console.log(p_data);
+	        	
+	        	if(!confirm('상담 예약을 취소하시겠습니까?')){
+	        		return;
+	        	}
+	        	
+				let v_ajax = new XMLHttpRequest();
+	            
+	            let v_url = '${pageContext.request.contextPath }/cancelReserv';
+	            
+	            
+	            v_ajax.open('POST', v_url);
+	            
+	            // POST 방식으로 AJAX 요청시 헤더 설정을 해주어야 한다.
+	            v_ajax.setRequestHeader("Content-Type", "application/json");
+	            let v_data = {
+	            	reservName : p_data["data"]["reservName"],
+	            	reservPhone : p_data["data"]["reservPhone"]
+	            };
+	            
+	            v_ajax.onload = function(){
+	            	
+	            	if(v_ajax.response == 'true'){
+	            		location.href = '${pageContext.request.contextPath }/reservView';
+	            	}else{
+	            		alert('서버에 문제가 발생하였습니다.');
+	            		location.href = '${pageContext.request.contextPath }/reservView';
+	            	}
+	            	
+	            }
+	            
+	            v_ajax.send(JSON.stringify(v_data));
+	        }
+	        
 	        
         </script>
 	</body>

@@ -12,6 +12,9 @@ public interface IReservDAO {
 	// 예약 목록 불러오기
 	public List<ReservVO> getReservList(String choiceDate);
 	
+	// 예약 정보 불러오기
+	public ReservVO getReserv(ReservVO reserv);
+	
 	// 상담 예약 등록
 	public int insertReserv(ReservVO reserv);
 	

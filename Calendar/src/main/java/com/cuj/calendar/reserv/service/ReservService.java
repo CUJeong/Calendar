@@ -26,6 +26,12 @@ public class ReservService {
 		return result;
 	};
 	
+	// 예약 정보 불러오기
+	public ReservVO getReserv(ReservVO reserv){
+		ReservVO result = dao.getReserv(reserv);
+		return result;
+	}
+	
 	// 상담 예약 등록
 	public void insertReserv(ReservVO reserv) throws Exception {
 		int result = dao.insertReserv(reserv); 

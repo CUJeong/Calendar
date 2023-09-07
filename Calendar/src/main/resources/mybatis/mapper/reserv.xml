@@ -16,6 +16,21 @@
 		  AND SUBSTR(#{choiceDate}, 1, 7) = SUBSTR(TO_CHAR(reserv_date, 'yyyy-mm-dd'), 1, 7)
 	</select>
 	
+	<select id="getReserv" parameterType="com.cuj.calendar.reserv.vo.ReservVO" resultType="com.cuj.calendar.reserv.vo.ReservVO">
+		SELECT
+		      TO_CHAR(reserv_date, 'yyyy-mm-dd') AS reserv_date
+		    , reserv_time 
+		    , reserv_name 
+		    , reserv_phone 
+		    , reserv_pw 
+		    , del_yn 
+		FROM reserv
+		WHERE 1=1
+		  AND del_yn = 'N'
+		  AND reserv_phone = #{reservPhone}
+		  AND reserv_pw = #{reservPw}
+	</select>
+	
 	<insert id="insertReserv" parameterType="com.cuj.calendar.reserv.vo.ReservVO">
 		INSERT INTO reserv (
 		      reserv_date 
@@ -78,7 +93,7 @@
 		    del_yn = 'Y'
 		WHERE 1=1
           AND del_yn = 'N'
-		  AND reserv_date <![CDATA[<]]> SYSDATE	
+		  AND TO_DATE(reserv_date)+1 <![CDATA[<]]> SYSDATE	
 	</update>
 	
 	

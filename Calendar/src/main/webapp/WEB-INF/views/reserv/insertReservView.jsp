@@ -247,7 +247,7 @@
 			input::placeholder{
 			  color: #aaa
 			}
-			input[type="tel"]{
+			input[type="number"]{
 				-webkit-text-security: disc;
 			}
 			.dust-class{
@@ -320,6 +320,7 @@
 			}
 			
 	        .common-modal{
+	        	font-family: 'Montserrat', sans-serif;
 	            position: fixed;
 	            left: 50%;
 	            top: 50%;
@@ -526,15 +527,15 @@
 			    			
 							<div class="dust-class">
 							  <label for="inputName"><span>* </span>이름</label>
-							  <input name="reservName" type="text" class="txt-input" id="inputName" placeholder="이름을 입력해주세요." value="" >
+							  <input name="reservName" type="text" class="txt-input" id="inputName" placeholder="이름을 입력해주세요." value="${reserv.reservName }" >
 							</div>
 							<div class="dust-class">
 							  <label for="inputPhone"><span>* </span>연락처</label>
-							  <input name="reservPhone" type="number" pattern="\d*" class="txt-input" id="inputPhone" placeholder="ex) 01012345678" value="">
+							  <input name="reservPhone" type="tel" pattern="\d*" class="txt-input" id="inputPhone" placeholder="ex) 01012345678" value="${reserv.reservPhone }">
 							</div>
 							<div class="dust-class">
 							  <label for="inputPw"><span>* </span>비밀번호</label>
-							  <input name="reservPw" type="tel" pattern="\d*" class="txt-input" id="inputPw" placeholder="4자리 숫자 입력" value="" >
+							  <input name="reservPw" type="number" pattern="\d*" class="txt-input" id="inputPw" placeholder="4자리 숫자 입력" value="" >
 							</div>
 						    <p><sup>*</sup>비밀번호는 상담 예약 확인 및 수정/삭제를 위해 사용됩니다.</p>
 						    
@@ -797,7 +798,7 @@
 		            		v_insertForm.submit();
 		            	});
 	            	}else{
-	            		document.querySelector("#modalContent").innerHTML = "<p>" + '<svg width="30" height="20" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 11h6v1h-7v-9h1v8z"/></svg>' + v_inputDate.value + "&nbsp;" + v_inputTime.value + "</p>" + "<p>다른 날짜에 이미 예약신청중입니다.</p><p>기존 예약을 취소하고 현재 날짜로 다시 예약 신청하겠습니까?</p>";
+	            		document.querySelector("#modalContent").innerHTML = "<p>다른 날짜에 이미 예약신청중입니다.</p><p>기존 예약을 취소하고 현재 날짜로 다시 예약 신청하겠습니까?</p>" + "<p>" + '<svg width="30" height="20" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 11h6v1h-7v-9h1v8z"/></svg>' + v_inputDate.value + "&nbsp;" + v_inputTime.value + "</p>";
 		            	document.querySelector("#confirmBtn").addEventListener("click", function(){
 		            		v_insertForm.action = '${pageContext.request.contextPath }/updateReservDo';
 		            		v_insertForm.submit();
@@ -864,14 +865,14 @@
 	            	});
 	        		return false;
 	        	}else if(!phoneRegex.test(v_inputPhone.value)){
-	        		document.querySelector("#modalContent").innerHTML = "<p>올바른 연락처를 입력해주세요.</p>";
+	        		document.querySelector("#modalContent").innerHTML = "<p>연락처에 '-'를 제외하여 입력해주세요.</p>";
 	        		f_show();
 	            	document.querySelector("#confirmBtn").addEventListener("click", function(){
 	            		f_close();
 	            	});
 	        		return false;
 	        	}else if(!pwRegex.test(v_inputPw.value)){
-	        		document.querySelector("#modalContent").innerHTML = "<p>비밀번호 4자리수를 입력해주세요.</p>";
+	        		document.querySelector("#modalContent").innerHTML = "<p>비밀번호에 숫자 4자리수를 입력해주세요.</p>";
 	        		f_show();
 	            	document.querySelector("#confirmBtn").addEventListener("click", function(){
 	            		f_close();
